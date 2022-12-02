@@ -1,4 +1,4 @@
-package sfwe301;
+package com.sfwebackend;
 
 import static org.junit.Assert.assertTrue;
 
