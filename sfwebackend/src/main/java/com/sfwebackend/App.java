@@ -10,6 +10,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.URL;
 import java.io.*;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 //Image
 import javax.imageio.*;
@@ -53,7 +55,7 @@ public class App {
 
             String storage = webscrape(url, "div." + element);
 
-            htmlcreator(name, storage, element);
+            htmlcreatorA(name, storage, element);
 
         }
 
@@ -71,7 +73,7 @@ public class App {
 
         }
 
-        pdfGrab("https://engineering.arizona.edu/pdfs/4-year-degree-plans/2022/SoftwareEngineering22-23.pdf",
+        pdfGrab("https://engineering.arizona.edu/pdfs/4-year-degree-plans/",
                 "testpdf");
 
         // Run webscrape & QRgenerator above for all required qr-codes and website info
@@ -102,7 +104,7 @@ public class App {
     }
     // End of webscrape
 
-    public static void htmlcreator(String objname, String content, String element) {
+    public static void htmlcreatorA(String objname, String content, String element) {
 
         String filename = "html/" + objname + ".html";
 
@@ -115,6 +117,23 @@ public class App {
             boolean fileexists = htmlfile.exists();
 
             if (filemade || fileexists) {
+
+                while (content.indexOf("<a href=") != -1) {
+
+                    int i1 = content.indexOf("<a href=");
+
+                    int i2 = content.indexOf(">", i1 + 1);
+
+                    String s1 = content.substring(0, i1);
+
+                    String s2 = content.substring(i2 + 1, content.length() - 1);
+
+                    content = s1 + s2;
+
+                    content.replaceAll("</a>", "");
+
+                    System.out.println("A");
+                }
 
                 System.out.println("File " + filename + " made");
 
@@ -150,8 +169,8 @@ public class App {
 
     public static void QRgenerator(String url, String name) throws WriterException, IOException {
 
-        File QRFile = new File("qrs/" + name + ".png");
-        System.out.println("File qrs/" + name + ".png made");
+        File QRFile = new File("png/" + name + ".png");
+        System.out.println("File png/" + name + ".png made");
 
         int imgSize = 800;
 
@@ -189,25 +208,59 @@ public class App {
 
     public static void pdfGrab(String url, String name) throws IOException {
 
-        URL fileurl = new URL(url);
+        String pathname = "pdf/" + name + ".pdf";
 
-        String pathname = "pdfimgs/" + name + ".pdf";
+        DateTimeFormatter yearForm = DateTimeFormatter.ofPattern("yyyy");
+
+        DateTimeFormatter monthForm = DateTimeFormatter.ofPattern("MM");
+
+        LocalDateTime now = LocalDateTime.now();
+
+        String year = yearForm.format(now);
+
+        String month = monthForm.format(now);
+
+        int monthNum = Integer.parseInt(month);
+
+        int yearNumFull = Integer.parseInt(year);
+
+        if (monthNum <= 7) {
+
+            yearNumFull -= 1;
+
+        }
+
+        int yearNum = (yearNumFull % 100);
+
+        String pdfYearString = String.valueOf(yearNumFull) + "/SoftwareEngineering" + String.valueOf(yearNum) + "-"
+                + String.valueOf(yearNum + 1) + ".pdf";
+
+        URL fileurl = new URL(url + pdfYearString);
+
+        System.out.println(url + pdfYearString);
 
         InputStream is = fileurl.openStream();
 
         FileOutputStream fs = new FileOutputStream(pathname);
 
-        System.out.println("File pdfimgs/" + name + ".pdf made");
+        System.out.println("File pdf/" + name + ".pdf made");
 
         byte[] buffer = new byte[1024];
 
         int l = -1;
+
         while ((l = is.read(buffer)) > -1) {
+
             fs.write(buffer, 0, l);
+
         }
 
         fs.close();
         is.close();
+
+    }
+
+    public static void docRead(String filename) {
 
     }
 
