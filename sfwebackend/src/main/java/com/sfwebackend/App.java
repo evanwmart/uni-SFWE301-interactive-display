@@ -93,6 +93,21 @@ public class App {
 
         // Run webscrape & QRgenerator above for all required qr-codes and website info
         // Run the frontend executable beneath once all the datafiles have been made
+        String appPath = "sfwedisplay.app";
+
+        String[] command = { "open", "-a", appPath };
+
+        try {
+
+            Runtime.getRuntime().exec(command);
+
+            System.out.println(appPath + " launched");
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        }
 
         System.out.println("Main Ended");
 
