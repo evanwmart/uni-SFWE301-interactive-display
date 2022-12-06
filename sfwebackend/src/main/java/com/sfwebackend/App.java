@@ -77,7 +77,8 @@ public class App {
         String[][] qrSites = {
                 { "https://ua-trellis.force.com/uastudent/s/catcloud/services/calendar/?NetId=julianalincoln",
                         "appointmentQR" },
-                { "", }
+                { "https://arizona.us14.list-manage.com/track/click?u=a5ea0ff379e02f7f6b0962483&id=a8ab5003ae&e=533784a57c",
+                        "discordQR" }
         };
 
         // Iterate through the qr generation data and create png files
