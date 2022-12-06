@@ -99,7 +99,9 @@ public class App {
 
             System.out.println("Attempting .exe launch");
 
-            Runtime.getRuntime().exec("sfwedisplay.exe");
+            ProcessBuilder pb = new ProcessBuilder("sfwedisplay.exe");
+
+            pb.start();
 
         } catch (IOException IOexception) {
 
@@ -148,7 +150,7 @@ public class App {
             // Create the file object, if the target file already exists delete it so that
             // new data will be generated
 
-            String filename = "src/html/" + objname + ".html";
+            String filename = "src\\html\\" + objname + ".html";
 
             File file = new File(filename);
 
@@ -236,7 +238,7 @@ public class App {
             // Create the file object, if the target file already exists delete it so that
             // new data will be generated
 
-            String filename = "src/png/" + name + ".png";
+            String filename = "src\\png\\" + name + ".png";
 
             File file = new File(filename);
 
@@ -247,10 +249,10 @@ public class App {
             }
 
             // Create new file object
-            File QRFile = new File("src/png/" + name + ".png");
+            File QRFile = new File("src\\png\\" + name + ".png");
 
             // For testing - indicates when this stage is completed
-            System.out.println("File src/png/" + name + ".png made");
+            System.out.println("File src\\png\\" + name + ".png made");
 
             // Width and Height size value of our square QR code image
             int imgSize = 800;
@@ -311,7 +313,7 @@ public class App {
 
     public static void pdfGrab(String url, String name) throws IOException {
 
-        String pathname = "src/pdf/" + name + ".pdf";
+        String pathname = "src\\pdf\\" + name + ".pdf";
 
         DateTimeFormatter yearForm = DateTimeFormatter.ofPattern("yyyy");
 
@@ -346,7 +348,7 @@ public class App {
 
         FileOutputStream fs = new FileOutputStream(pathname);
 
-        System.out.println("File src/pdf/" + name + ".pdf made");
+        System.out.println("File src\\pdf\\" + name + ".pdf made");
 
         byte[] buffer = new byte[1024];
 
