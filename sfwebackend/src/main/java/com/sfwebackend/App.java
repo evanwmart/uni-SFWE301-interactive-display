@@ -96,25 +96,18 @@ public class App {
         
         try {
             // Launch the .exe file
-            Process process = Runtime.getRuntime().exec("sfwedisplay.exe");
+            
+            System.out.println("Attempting .exe launch");
 
-            // Wait for the process to finish
-            process.waitFor();
+            
+            Runtime.getRuntime().exec("sfwedisplay.exe");
 
-            // Check the exit code of the process
-            int exitCode = process.exitValue();
             
-            if (exitCode != 0) {
-                
-                // There was an error launching the .exe file
-                System.out.println("Error launching .exe file. Exit code: " + exitCode);
-                
-            }
-        } catch (IOException | InterruptedException e) {
-            
-            // There was an error launching the .exe file
-            System.out.println("Error launching .exe file: " + e.getMessage());
-            
+        } catch (IOException IOexception) {
+
+            // Print error info to console
+            IOexception.printStackTrace();
+
         }
 
         System.out.println("Main Ended");
