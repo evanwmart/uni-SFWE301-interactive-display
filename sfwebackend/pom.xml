@@ -21,11 +21,17 @@
   <dependencies>
 
     <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <version>3.4.2</version>
+      <type>maven-plugin</type>
+    </dependency>
+
+    <dependency>
       <groupId>com.google.zxing</groupId>
       <artifactId>core</artifactId>
       <version>3.3.3</version>
     </dependency>
-
 
     <dependency>
       <groupId>org.jsoup</groupId>
@@ -46,6 +52,38 @@
       <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.4.2</version>
+          <configuration>
+            <outputDirectory>${basedir}/src</outputDirectory>
+            <includeEmptyDirs>true</includeEmptyDirs>
+            <resources>
+              <resource>
+                <directory>${basedir}/src/html</directory>
+                <filtering>false</filtering>
+              </resource>
+              <resource>
+                <directory>${basedir}/src/pdf</directory>
+                <filtering>false</filtering>
+              </resource>
+              <resource>
+                <directory>${basedir}/src/png</directory>
+                <filtering>false</filtering>
+              </resource>
+            </resources>
+          </configuration>
+          <executions>
+            <execution>
+              <id>make-assembly</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
