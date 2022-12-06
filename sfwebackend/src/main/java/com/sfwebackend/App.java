@@ -93,20 +93,28 @@ public class App {
 
         // Run webscrape & QRgenerator above for all required qr-codes and website info
         // Run the frontend executable beneath once all the datafiles have been made
-        String appPath = "sfwedisplay.app";
-
-        String[] command = { "open", "-a", appPath };
-
+        
         try {
+            // Launch the .exe file
+            Process process = Runtime.getRuntime().exec("sfwedisplay.exe");
 
-            Runtime.getRuntime().exec(command);
+            // Wait for the process to finish
+            process.waitFor();
 
-            System.out.println(appPath + " launched");
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
+            // Check the exit code of the process
+            int exitCode = process.exitValue();
+            
+            if (exitCode != 0) {
+                
+                // There was an error launching the .exe file
+                System.out.println("Error launching .exe file. Exit code: " + exitCode);
+                
+            }
+        } catch (IOException | InterruptedException e) {
+            
+            // There was an error launching the .exe file
+            System.out.println("Error launching .exe file: " + e.getMessage());
+            
         }
 
         System.out.println("Main Ended");
