@@ -32,6 +32,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.spire.pdf.PdfDocument;
+import com.spire.pdf.graphics.PdfImageType;
+
 //Util
 // Provide hashtable data type used in the QR code generation
 import java.util.Hashtable;
@@ -73,7 +76,8 @@ public class App {
         // for generting a QR code png
         String[][] qrSites = {
                 { "https://ua-trellis.force.com/uastudent/s/catcloud/services/calendar/?NetId=julianalincoln",
-                        "appointmentQR" }
+                        "appointmentQR" },
+                { "", }
         };
 
         // Iterate through the qr generation data and create png files
@@ -138,7 +142,7 @@ public class App {
 
         return "";
     }
-    // End of webscrape
+    // End of webscrapesrc
 
     public static void htmlcreatorA(String objname, String content, String element) {
         // This function filters the html string to find the useful target element and
@@ -150,7 +154,7 @@ public class App {
             // Create the file object, if the target file already exists delete it so that
             // new data will be generated
 
-            String filename = "sfwedisplay\\src\\html\\" + objname + ".html";
+            String filename = "sfwebackend\\src\\html\\" + objname + ".html";
 
             File file = new File(filename);
 
@@ -238,7 +242,7 @@ public class App {
             // Create the file object, if the target file already exists delete it so that
             // new data will be generated
 
-            String filename = "sfwedisplay\\src\\png\\" + name + ".png";
+            String filename = "sfwebackend\\src\\png\\" + name + ".png";
 
             File file = new File(filename);
 
@@ -249,10 +253,10 @@ public class App {
             }
 
             // Create new file object
-            File QRFile = new File("sfwedisplay\\src\\png\\" + name + ".png");
+            File QRFile = new File("sfwebackend\\src\\png\\" + name + ".png");
 
             // For testing - indicates when this stage is completed
-            System.out.println("File sfwedisplay\\src\\png\\" + name + ".png made");
+            System.out.println("File sfwebackend\\src\\png\\" + name + ".png made");
 
             // Width and Height size value of our square QR code image
             int imgSize = 800;
@@ -313,7 +317,7 @@ public class App {
 
     public static void pdfGrab(String url, String name) throws IOException {
 
-        String pathname = "sfwedisplay\\src\\pdf\\" + name + ".pdf";
+        String pathname = "sfwebackend\\src\\pdf\\" + name + ".pdf";
 
         DateTimeFormatter yearForm = DateTimeFormatter.ofPattern("yyyy");
 
@@ -348,7 +352,7 @@ public class App {
 
         FileOutputStream fs = new FileOutputStream(pathname);
 
-        System.out.println("File sfwedisplay\\src\\pdf\\" + name + ".pdf made");
+        System.out.println("File sfwebackend\\src\\pdf\\" + name + ".pdf made");
 
         byte[] buffer = new byte[1024];
 
@@ -362,6 +366,24 @@ public class App {
 
         fs.close();
         is.close();
+
+        PdfDocument pdf = new PdfDocument();
+
+        // Load the pdf
+        pdf.loadFromFile("sfwebackend\\src\\pdf\\4yearplan.pdf");
+
+        // Iterate through pages
+        for (int i = 0; i < pdf.getPages().getCount(); i++) {
+
+            // Convert pages
+            BufferedImage image = pdf.saveAsImage(i, PdfImageType.Bitmap, 500, 500);
+
+            // Resave the
+            File file = new File("sfwebackend\\src\\" + String.format(("4yearplan%d.png"), i));
+
+            ImageIO.write(image, "PNG", file);
+        }
+        pdf.close();
 
     }
     // End of pdfGrab
