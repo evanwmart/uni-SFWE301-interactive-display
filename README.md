@@ -39,7 +39,7 @@ This project served as the backend component for an interactive display applicat
 - **Launches Front-End Executable**  
   After preparing resources, the backend triggers an Electron-based front-end `.exe` to display the collected data interactively.
 - **Modular Code Structure**  
-  Organized via a Maven project structure that separates logic, resources, and tests, making it easier to extend or integrate additional features.
+  Organized via a Maven project structure that separates logic, resources, and tests.
 
 ## Technology
 
@@ -67,7 +67,7 @@ This project served as the backend component for an interactive display applicat
 - **File Handling & Resource Management:**  
   Dealt with creating, deleting, and overwriting files in Java, ensuring the backend consistently produces updated artifacts.
 - **Maven & Modular Project Organization:**  
-  Gained hands-on experience structuring a large project with clear separation of concerns, simplifying future maintenance.
+  Gained hands-on experience structuring a large project with clear separation of concerns.
 - **Integration with Electron Front-End:**  
   Practiced coordinating a Java backend with an external GUI, highlighting the importance of robust inter-process communication.
 
